@@ -68,18 +68,15 @@
             letter-spacing: 0.3em;
             color: #B8A080;
         }
-        .hero-divider {
-            width: 40px;
-            height: 1px;
-            background: #8B6A48;
-            margin: 16px auto 20px;
-        }
-        .hero-desc {
-            font-size: 1rem;
+
+        /* ── Intro desc ── */
+        .intro-desc {
+            font-size: 1.1rem;
             font-style: italic;
-            color: #C8B898;
-            max-width: 480px;
-            line-height: 1.7;
+            color: #5A4535;
+            line-height: 1.85;
+            text-align: center;
+            margin-bottom: 24px;
         }
 
         /* ── Container ── */
@@ -510,14 +507,13 @@
             <h1 class="hero-title">Reserve Your Room</h1>
             <p class="hero-script">on the Property</p>
             <p class="hero-date">August 21 &amp; 22, 2026</p>
-            <div class="hero-divider"></div>
-            <p class="hero-desc">We'd love to have our closest family and friends staying with us at Hill Farm Inn. All on-site guests enjoy a complimentary breakfast each morning and the full run of the property all weekend long.</p>
         </div>
     </div>
 
     <div class="container">
 
         <div class="intro">
+            <p class="intro-desc">We'd love to have our closest family and friends staying with us at Hill Farm Inn. All on-site guests enjoy a complimentary breakfast each morning and the full run of the property all weekend long.</p>
             <div class="payment-note">
                 No payment is required to hold your room. After you submit, we will share your information with Hill Farm Inn, who will reach out directly to confirm your booking and arrange payment.
             </div>
@@ -592,7 +588,7 @@
             pricePerNight: 430,
             description: '"Honeymoon" king room with sweeping valley views, a Vermont Castings stove, and a luxurious bath with granite and marble shower and soaking tub.',
             image: './Battenkill_.jpg',
-            photosUrl: 'https://www.hillfarminn.com/inn-rooms'
+            photosUrl: 'https://www.hillfarminn.com/inn-rooms/#battenkill'
         },
         {
             id: 'equinox',
@@ -605,7 +601,7 @@
             pricePerNight: 375,
             description: 'Deluxe queen room with views of Mt. Equinox, tallest of the Taconic peaks. Located just off the upstairs sitting room, with a custom marble bath and Vermont Castings stove.',
             image: './Equinox-7.jpg',
-            photosUrl: 'https://www.hillfarminn.com/inn-rooms'
+            photosUrl: 'https://www.hillfarminn.com/inn-rooms/#equinox'
         },
         {
             id: 'wilcox',
@@ -618,7 +614,7 @@
             pricePerNight: 375,
             description: 'Tucked in a private corner just off the upstairs sitting room. Windows open toward the 1800s barn and Taconic Mountains. Features a Vermont Castings stove and a pampered travertine bath.',
             image: './Wilcox-3.jpg',
-            photosUrl: 'https://www.hillfarminn.com/inn-rooms'
+            photosUrl: 'https://www.hillfarminn.com/inn-rooms/#wilcox'
         },
         {
             id: 'saratoga-spring',
@@ -631,7 +627,7 @@
             pricePerNight: 375,
             description: 'A deluxe queen with mountain views to the west. Features beloved equestrian-inspired decor and a pristine marble bath with spacious shower.',
             image: './Saratoga_Spring.jpg',
-            photosUrl: 'https://www.hillfarminn.com/inn-rooms'
+            photosUrl: 'https://www.hillfarminn.com/inn-rooms/#saratoga'
         },
         {
             id: 'emerald-lake',
@@ -644,7 +640,7 @@
             pricePerNight: 375,
             description: 'Deluxe queen located next to Saratoga with mountain views to the west.',
             image: './Emerald_Lake.jpg',
-            photosUrl: 'https://www.hillfarminn.com/inn-rooms',
+            photosUrl: 'https://www.hillfarminn.com/inn-rooms/#emerald-lake',
             preReserved: true
         },
         {
@@ -658,7 +654,7 @@
             pricePerNight: 475,
             description: 'Deluxe king suite with an adjoining sitting room and a spacious bath with shower and tub. Ideal for families.',
             image: './Hill_Farm_Suite-5.jpg',
-            photosUrl: 'https://www.hillfarminn.com/inn-rooms'
+            photosUrl: 'https://www.hillfarminn.com/inn-rooms/#hill-farm-suite'
         },
         {
             id: 'honeybee',
@@ -671,7 +667,7 @@
             pricePerNight: 475,
             description: 'Queen bedroom suite with mountain views, a comfortable sitting room, and a beautifully appointed marble bath.',
             image: './Honeybee.jpg',
-            photosUrl: 'https://www.hillfarminn.com/inn-rooms'
+            photosUrl: 'https://www.hillfarminn.com/inn-rooms/#honeybee-suite'
         },
         // ── 1790 House ──
         {
@@ -685,7 +681,7 @@
             pricePerNight: 430,
             description: 'A valley-view room in the 1790 House with a sumptuous king bed, loveseat, and Vermont Castings stove. Lofty beamed ceilings and a custom bath with shower and soaking tub.',
             image: './Sandgate-10.jpg',
-            photosUrl: 'https://www.hillfarminn.com/inn-rooms'
+            photosUrl: 'https://www.hillfarminn.com/inn-rooms/#sandgate'
         },
         {
             id: 'landgrove',
@@ -698,7 +694,7 @@
             pricePerNight: 430,
             description: 'A rustic retreat in the 1790 House with a beamed ceiling and big open views. Features a deluxe king, cozy loveseat, Vermont Castings stove, and a neat private bath.',
             image: './Landgrove.jpg',
-            photosUrl: 'https://www.hillfarminn.com/inn-rooms'
+            photosUrl: 'https://www.hillfarminn.com/inn-rooms/#landgrove'
         },
         {
             id: 'grafton',
@@ -711,7 +707,7 @@
             pricePerNight: 375,
             description: 'A staff favorite — cozy and tucked away with gorgeous hickory floors, low ceilings, and beautiful antique accents. One of only two first-floor rooms in the entire inn.',
             image: './Grafton.jpg',
-            photosUrl: 'https://www.hillfarminn.com/inn-rooms'
+            photosUrl: 'https://www.hillfarminn.com/inn-rooms/#grafton'
         },
         {
             id: 'dorset-suite',
@@ -724,7 +720,7 @@
             pricePerNight: 500,
             description: 'A cheerful, roomy suite with a queen master bedroom, Vermont Castings stove, and en-suite bath. Includes an adjoining room with twin day beds. First floor and ADA compliant.',
             image: './Dorset_Suite-4.jpg',
-            photosUrl: 'https://www.hillfarminn.com/inn-rooms'
+            photosUrl: 'https://www.hillfarminn.com/inn-rooms/#dorset-suite'
         }
     ];
 
