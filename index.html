@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reserve Your Room · Charlotte & Chase · August 22, 2026</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: Georgia, 'Times New Roman', serif;
+            background: #FAF7F4;
+            color: #3A2A1A;
+            min-height: 100vh;
+        }
+
+        /* Hero */
+        .hero {
+            position: relative;
+            height: 380px;
+            overflow: hidden;
+        }
+        .hero img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center 55%;
+        }
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(25, 12, 4, 0.48);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 0 20px;
+        }
+        .hero-eyebrow {
+            color: #C4A888;
+            font-size: 0.72rem;
+            letter-spacing: 0.35em;
+            text-transform: uppercase;
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+            margin-bottom: 12px;
+        }
+        .hero-overlay h1 {
+            color: #F5EFE0;
+            font-size: 2.4rem;
+            font-weight: 400;
+            letter-spacing: 0.08em;
+            margin-bottom: 10px;
+        }
+        .hero-overlay p {
+            color: #D4C4A8;
+            font-size: 0.8rem;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            font-family: -apple-system, sans-serif;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1120px;
+            margin: 0 auto;
+            padding: 0 28px;
+        }
+
+        /* Intro */
+        .intro {
+            text-align: center;
+            padding: 52px 0 40px;
+            max-width: 660px;
+            margin: 0 auto;
+        }
+        .intro h2 {
+            font-size: 1.35rem;
+            font-weight: 400;
+            color: #6B3A1F;
+            letter-spacing: 0.06em;
+            margin-bottom: 16px;
+        }
+        .intro p {
+            font-size: 0.95rem;
+            line-height: 1.85;
+            color: #5A4535;
+        }
+        .intro .payment-note {
+            margin-top: 20px;
+            font-size: 0.84rem;
+            color: #6A5040;
+            font-style: italic;
+            font-family: -apple-system, sans-serif;
+            padding: 14px 22px;
+            border: 1px solid #DDD0BC;
+            border-radius: 4px;
+            background: #FDF9F4;
+            line-height: 1.7;
+        }
+
+        /* Section label */
+        .section-label {
+            text-align: center;
+            font-size: 0.72rem;
+            letter-spacing: 0.32em;
+            text-transform: uppercase;
+            color: #9A8878;
+            margin-bottom: 34px;
+            font-family: -apple-system, sans-serif;
+        }
+
+        /* Room grid */
+        .room-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            padding-bottom: 70px;
+        }
+        @media (max-width: 920px) {
+            .room-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 580px) {
+            .room-grid { grid-template-columns: 1fr; gap: 20px; }
+            .hero-overlay h1 { font-size: 1.75rem; }
+        }
+
+        /* Room card */
+        .room-card {
+            background: white;
+            border-radius: 6px;
+            overflow: hidden;
+            box-shadow: 0 1px 8px rgba(40, 20, 5, 0.08);
+            transition: transform 0.22s, box-shadow 0.22s;
+        }
+        .room-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 6px 20px rgba(40, 20, 5, 0.13);
+        }
+        .room-card.is-reserved {
+            opacity: 0.72;
+        }
+        .room-card.is-reserved:hover {
+            transform: none;
+            box-shadow: 0 1px 8px rgba(40, 20, 5, 0.08);
+        }
+
+        .room-photo {
+            position: relative;
+            height: 210px;
+            overflow: hidden;
+            background: #EDE8E0;
+        }
+        .room-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.32s;
+        }
+        .room-card:hover .room-photo img {
+            transform: scale(1.04);
+        }
+
+        .badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            padding: 4px 11px;
+            border-radius: 20px;
+            font-size: 0.68rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            font-family: -apple-system, sans-serif;
+            font-weight: 500;
+        }
+        .badge-available { background: #7A8A6A; color: white; }
+        .badge-reserved  { background: #8B6858; color: white; }
+
+        .room-info { padding: 20px 22px 22px; }
+
+        .room-name {
+            font-size: 1.12rem;
+            font-weight: 400;
+            color: #2A1A0A;
+            margin-bottom: 4px;
+            letter-spacing: 0.02em;
+        }
+        .room-meta {
+            font-size: 0.76rem;
+            color: #9A8878;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            font-family: -apple-system, sans-serif;
+            margin-bottom: 12px;
+        }
+        .room-attrs {
+            display: flex;
+            gap: 18px;
+            margin-bottom: 14px;
+        }
+        .room-attr {
+            font-size: 0.82rem;
+            color: #5A4535;
+            font-family: -apple-system, sans-serif;
+        }
+        .room-attr .label { color: #9A8878; }
+
+        .room-price {
+            font-size: 1rem;
+            color: #6B3A1F;
+            margin-bottom: 18px;
+            font-family: -apple-system, sans-serif;
+        }
+        .room-price small {
+            font-size: 0.76rem;
+            color: #9A8878;
+            font-weight: 400;
+        }
+
+        .btn-reserve {
+            width: 100%;
+            padding: 11px;
+            background: #6B3A1F;
+            color: #F5EFE0;
+            border: none;
+            border-radius: 4px;
+            font-family: Georgia, serif;
+            font-size: 0.82rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: background 0.18s;
+        }
+        .btn-reserve:hover:not(:disabled) { background: #8B4A28; }
+        .btn-reserve:disabled {
+            background: #C8B8A8;
+            cursor: not-allowed;
+            color: #EDE8E0;
+        }
+
+        /* Modal overlay */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(20, 8, 2, 0.62);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .modal-overlay.active { display: flex; }
+
+        .modal {
+            background: #FAF7F4;
+            border-radius: 8px;
+            max-width: 500px;
+            width: 100%;
+            max-height: 92vh;
+            overflow-y: auto;
+            padding: 38px 40px;
+        }
+        @media (max-width: 540px) {
+            .modal { padding: 28px 22px; }
+        }
+
+        .modal-header { margin-bottom: 22px; }
+        .modal-header h3 {
+            font-size: 1.3rem;
+            font-weight: 400;
+            color: #2A1A0A;
+            margin-bottom: 5px;
+        }
+        .modal-header p {
+            font-size: 0.84rem;
+            color: #9A8878;
+            font-family: -apple-system, sans-serif;
+        }
+
+        .divider {
+            height: 1px;
+            background: #DDD0BC;
+            margin: 20px 0;
+        }
+
+        .form-group { margin-bottom: 18px; }
+        .form-group label {
+            display: block;
+            font-size: 0.74rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: #6B3A1F;
+            font-family: -apple-system, sans-serif;
+            margin-bottom: 6px;
+        }
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px 13px;
+            border: 1px solid #DDD0BC;
+            border-radius: 4px;
+            font-family: -apple-system, sans-serif;
+            font-size: 0.9rem;
+            color: #3A2A1A;
+            background: white;
+            outline: none;
+            transition: border-color 0.18s;
+            appearance: auto;
+        }
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus { border-color: #7A8A6A; }
+        .form-group textarea { resize: vertical; min-height: 80px; }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+        @media (max-width: 400px) {
+            .form-row { grid-template-columns: 1fr; }
+        }
+
+        .modal-payment-note {
+            background: #FDF9F4;
+            border: 1px solid #DDD0BC;
+            border-radius: 4px;
+            padding: 13px 16px;
+            font-size: 0.82rem;
+            color: #6A5040;
+            font-family: -apple-system, sans-serif;
+            line-height: 1.65;
+            margin-bottom: 22px;
+            font-style: italic;
+        }
+
+        .modal-actions { display: flex; gap: 12px; }
+        .btn-cancel {
+            flex: 1;
+            padding: 11px;
+            border: 1px solid #DDD0BC;
+            background: white;
+            border-radius: 4px;
+            font-family: Georgia, serif;
+            font-size: 0.82rem;
+            color: #9A8878;
+            cursor: pointer;
+            transition: background 0.18s;
+        }
+        .btn-cancel:hover { background: #F5EFE0; }
+        .btn-submit {
+            flex: 2;
+            padding: 11px;
+            background: #6B3A1F;
+            color: #F5EFE0;
+            border: none;
+            border-radius: 4px;
+            font-family: Georgia, serif;
+            font-size: 0.82rem;
+            letter-spacing: 0.08em;
+            cursor: pointer;
+            transition: background 0.18s;
+        }
+        .btn-submit:hover:not(:disabled) { background: #8B4A28; }
+        .btn-submit:disabled { background: #C8B8A8; cursor: not-allowed; }
+
+        /* Success */
+        .success-state {
+            text-align: center;
+            padding: 16px 0 8px;
+        }
+        .success-icon {
+            width: 58px;
+            height: 58px;
+            border-radius: 50%;
+            background: #7A8A6A;
+            color: white;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 22px;
+        }
+        .success-state h3 {
+            font-size: 1.25rem;
+            font-weight: 400;
+            color: #2A1A0A;
+            margin-bottom: 12px;
+        }
+        .success-state p {
+            font-size: 0.9rem;
+            color: #5A4535;
+            line-height: 1.75;
+            font-family: -apple-system, sans-serif;
+            margin-bottom: 10px;
+        }
+        .success-state .muted {
+            color: #9A8878;
+            font-size: 0.82rem;
+            font-style: italic;
+        }
+
+        /* Loading */
+        .loading-state {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 60px 0;
+            color: #9A8878;
+            font-style: italic;
+            font-family: -apple-system, sans-serif;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 30px 24px;
+            border-top: 1px solid #E8DDD0;
+            font-size: 0.74rem;
+            color: #B09A88;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            font-family: -apple-system, sans-serif;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="hero">
+        <img src="./Banner_Photos-13.jpg" alt="Hill Farm Inn, Sunderland Vermont">
+        <div class="hero-overlay">
+            <p class="hero-eyebrow">Hill Farm Inn &nbsp;·&nbsp; Sunderland, Vermont</p>
+            <h1>Reserve Your Room</h1>
+            <p>Charlotte & Chase &nbsp;·&nbsp; August 22, 2026</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="intro">
+            <h2>Stay On the Property With Us</h2>
+            <p>We'd love to have our closest family and friends with us for the full weekend at Hill Farm Inn. Rooms are available for Friday and Saturday night (August 21–22), and all guests receive complimentary breakfast both mornings.</p>
+            <div class="payment-note">
+                No payment is required to reserve. After submitting, we will share your information with Hill Farm Inn, who will reach out directly to confirm your booking and arrange payment.
+            </div>
+        </div>
+
+        <p class="section-label">Inn Rooms &amp; Suites &nbsp;·&nbsp; 11 Rooms Available</p>
+
+        <div id="room-grid" class="room-grid">
+            <div class="loading-state">Loading rooms...</div>
+        </div>
+    </div>
+
+    <footer>C &amp; C &nbsp;&nbsp;·&nbsp;&nbsp; 8.22.2026 &nbsp;&nbsp;·&nbsp;&nbsp; Hill Farm Inn, Sunderland, Vermont</footer>
+
+    <!-- Booking Modal -->
+    <div class="modal-overlay" id="modal-overlay">
+        <div class="modal">
+            <div id="modal-body"></div>
+        </div>
+    </div>
+
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+
+    <script>
+    // ============================================================
+    // FIREBASE CONFIG
+    // Replace these values with your own from the Firebase Console.
+    // See README.md for step-by-step setup instructions.
+    // ============================================================
+    const firebaseConfig = {
+        apiKey:            "REPLACE_WITH_YOUR_API_KEY",
+        authDomain:        "REPLACE_WITH_YOUR_PROJECT_ID.firebaseapp.com",
+        projectId:         "REPLACE_WITH_YOUR_PROJECT_ID",
+        storageBucket:     "REPLACE_WITH_YOUR_PROJECT_ID.appspot.com",
+        messagingSenderId: "REPLACE_WITH_YOUR_SENDER_ID",
+        appId:             "REPLACE_WITH_YOUR_APP_ID"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    // ============================================================
+    // ROOM DATA
+    // Adjust room types / prices below if needed.
+    // All rooms are booked for 2 nights (Fri + Sat).
+    // ============================================================
+    const ROOMS = [
+        {
+            id: 'grafton',
+            name: 'Grafton',
+            type: 'Queen Room',
+            location: 'Main Inn',
+            maxGuests: 2,
+            pricePerNight: 375,
+            image: './Grafton.jpg'
+        },
+        {
+            id: 'battenkill',
+            name: 'Battenkill',
+            type: 'King Room',
+            location: 'Main Inn',
+            maxGuests: 2,
+            pricePerNight: 430,
+            image: './Battenkill_.jpg'
+        },
+        {
+            id: 'equinox',
+            name: 'Equinox',
+            type: 'Queen Room',
+            location: 'Main Inn',
+            maxGuests: 2,
+            pricePerNight: 375,
+            image: './Equinox-7.jpg'
+        },
+        {
+            id: 'saratoga-spring',
+            name: 'Saratoga Spring',
+            type: 'Queen Room',
+            location: 'Main Inn',
+            maxGuests: 2,
+            pricePerNight: 375,
+            image: './Saratoga_Spring.jpg'
+        },
+        {
+            id: 'wilcox',
+            name: 'Wilcox',
+            type: 'Queen Room',
+            location: '1790 House',
+            maxGuests: 2,
+            pricePerNight: 375,
+            image: './Wilcox-3.jpg'
+        },
+        {
+            id: 'landgrove',
+            name: 'Landgrove',
+            type: 'Queen Room',
+            location: '1790 House',
+            maxGuests: 2,
+            pricePerNight: 375,
+            image: './Landgrove.jpg'
+        },
+        {
+            id: 'sandgate',
+            name: 'Sandgate',
+            type: 'King Room',
+            location: '1790 House',
+            maxGuests: 2,
+            pricePerNight: 430,
+            image: './Sandgate-10.jpg'
+        },
+        {
+            id: 'emerald-lake',
+            name: 'Emerald Lake',
+            type: 'King Room',
+            location: 'Main Inn',
+            maxGuests: 2,
+            pricePerNight: 430,
+            image: './Emerald_Lake.jpg',
+            preReserved: true
+        },
+        {
+            id: 'hill-farm-suite',
+            name: 'Hill Farm Suite',
+            type: 'Suite',
+            location: 'Main Inn',
+            maxGuests: 4,
+            pricePerNight: 475,
+            image: './Hill_Farm_Suite-5.jpg'
+        },
+        {
+            id: 'honeybee',
+            name: 'Honeybee Suite',
+            type: 'Suite',
+            location: 'Main Inn',
+            maxGuests: 4,
+            pricePerNight: 475,
+            image: './Honeybee.jpg'
+        },
+        {
+            id: 'dorset-suite',
+            name: 'Dorset Suite',
+            type: 'Suite · ADA Accessible',
+            location: 'Main Inn',
+            maxGuests: 4,
+            pricePerNight: 500,
+            image: './Dorset_Suite-4.jpg'
+        }
+    ];
+
+    // ============================================================
+    // SEED FIRESTORE — runs once on first load
+    // ============================================================
+    async function initRooms() {
+        for (const room of ROOMS) {
+            const ref = db.collection('rooms').doc(room.id);
+            const snap = await ref.get();
+            if (!snap.exists) {
+                await ref.set({
+                    name: room.name,
+                    type: room.type,
+                    reserved: room.preReserved || false,
+                    guestName: room.preReserved ? 'Reserved' : null,
+                    guestEmail: null,
+                    guestPhone: null,
+                    numGuests: null,
+                    notes: null,
+                    bookedAt: room.preReserved ? new Date() : null
+                });
+            }
+        }
+    }
+
+    // ============================================================
+    // RENDER — real-time listener
+    // ============================================================
+    function renderGrid(firestoreData) {
+        const grid = document.getElementById('room-grid');
+        grid.innerHTML = ROOMS.map(room => {
+            const data = firestoreData[room.id] || {};
+            const reserved = data.reserved || false;
+            const total = room.pricePerNight * 2;
+
+            return `
+                <div class="room-card ${reserved ? 'is-reserved' : ''}">
+                    <div class="room-photo">
+                        <img src="${room.image}" alt="${room.name}" loading="lazy">
+                        <span class="badge ${reserved ? 'badge-reserved' : 'badge-available'}">
+                            ${reserved ? 'Reserved' : 'Available'}
+                        </span>
+                    </div>
+                    <div class="room-info">
+                        <div class="room-name">${room.name}</div>
+                        <div class="room-meta">${room.type} &nbsp;·&nbsp; ${room.location}</div>
+                        <div class="room-attrs">
+                            <div class="room-attr"><span class="label">Guests: </span>Up to ${room.maxGuests}</div>
+                            <div class="room-attr"><span class="label">Stay: </span>Fri &amp; Sat</div>
+                        </div>
+                        <div class="room-price">
+                            $${total.toLocaleString()}
+                            <small>&nbsp;total &nbsp;($${room.pricePerNight}/night × 2)</small>
+                        </div>
+                        <button
+                            class="btn-reserve"
+                            ${reserved ? 'disabled' : ''}
+                            onclick="openModal('${room.id}')"
+                        >${reserved ? 'Reserved' : 'Reserve This Room'}</button>
+                    </div>
+                </div>
+            `;
+        }).join('');
+    }
+
+    function listenToRooms() {
+        db.collection('rooms').onSnapshot(snapshot => {
+            const data = {};
+            snapshot.forEach(doc => { data[doc.id] = doc.data(); });
+            renderGrid(data);
+        });
+    }
+
+    // ============================================================
+    // MODAL
+    // ============================================================
+    let activeRoomId = null;
+
+    function openModal(roomId) {
+        activeRoomId = roomId;
+        const room = ROOMS.find(r => r.id === roomId);
+        const total = room.pricePerNight * 2;
+
+        document.getElementById('modal-body').innerHTML = `
+            <div class="modal-header">
+                <h3>${room.name}</h3>
+                <p>${room.type} &nbsp;·&nbsp; Up to ${room.maxGuests} guests &nbsp;·&nbsp; $${total.toLocaleString()} total</p>
+            </div>
+            <div class="divider"></div>
+            <div class="form-group">
+                <label>Guest Name(s)</label>
+                <input type="text" id="f-name" placeholder="Full name(s) of guests staying">
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="f-email" placeholder="your@email.com">
+                </div>
+                <div class="form-group">
+                    <label>Phone</label>
+                    <input type="tel" id="f-phone" placeholder="(555) 555-5555">
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Number of Guests</label>
+                <select id="f-guests">
+                    ${Array.from({length: room.maxGuests}, (_, i) =>
+                        `<option value="${i+1}">${i+1} guest${i > 0 ? 's' : ''}</option>`
+                    ).join('')}
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Special Requests (optional)</label>
+                <textarea id="f-notes" placeholder="Dietary needs, accessibility requirements, anything else we should know..."></textarea>
+            </div>
+            <div class="modal-payment-note">
+                No payment is required now. After you submit, we will share your information with Hill Farm Inn, who will reach out to confirm your booking and process payment.
+            </div>
+            <div class="modal-actions">
+                <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+                <button class="btn-submit" id="btn-submit" onclick="submitBooking()">Confirm Reservation</button>
+            </div>
+        `;
+
+        document.getElementById('modal-overlay').classList.add('active');
+    }
+
+    function closeModal() {
+        document.getElementById('modal-overlay').classList.remove('active');
+        activeRoomId = null;
+    }
+
+    document.getElementById('modal-overlay').addEventListener('click', function(e) {
+        if (e.target === this) closeModal();
+    });
+
+    async function submitBooking() {
+        const name   = (document.getElementById('f-name').value || '').trim();
+        const email  = (document.getElementById('f-email').value || '').trim();
+        const phone  = (document.getElementById('f-phone').value || '').trim();
+        const guests = document.getElementById('f-guests').value;
+        const notes  = (document.getElementById('f-notes').value || '').trim();
+
+        if (!name || !email) {
+            alert('Please enter your name and email to continue.');
+            return;
+        }
+
+        const btn = document.getElementById('btn-submit');
+        btn.disabled = true;
+        btn.textContent = 'Reserving...';
+
+        try {
+            const ref  = db.collection('rooms').doc(activeRoomId);
+            const snap = await ref.get();
+
+            if (snap.data().reserved) {
+                alert('This room was just reserved by someone else. Please choose another room.');
+                closeModal();
+                return;
+            }
+
+            await ref.update({
+                reserved:   true,
+                guestName:  name,
+                guestEmail: email,
+                guestPhone: phone || null,
+                numGuests:  parseInt(guests),
+                notes:      notes || null,
+                bookedAt:   firebase.firestore.FieldValue.serverTimestamp()
+            });
+
+            const room = ROOMS.find(r => r.id === activeRoomId);
+            const firstName = name.split(' ')[0];
+
+            document.getElementById('modal-body').innerHTML = `
+                <div class="success-state">
+                    <div class="success-icon">✓</div>
+                    <h3>You're all set, ${firstName}!</h3>
+                    <p>Your request for the <strong>${room.name}</strong> has been received.</p>
+                    <p>Hill Farm Inn will be in touch at <strong>${email}</strong> to confirm your booking and arrange payment.</p>
+                    <p class="muted" style="margin-top: 14px;">We can't wait to celebrate with you.</p>
+                    <button class="btn-reserve" style="margin-top: 28px; max-width: 180px;" onclick="closeModal()">Done</button>
+                </div>
+            `;
+
+        } catch (err) {
+            console.error(err);
+            alert('Something went wrong. Please try again or reach out to Chase or Charlotte directly.');
+            btn.disabled = false;
+            btn.textContent = 'Confirm Reservation';
+        }
+    }
+
+    // ============================================================
+    // START
+    // ============================================================
+    initRooms().then(() => listenToRooms()).catch(console.error);
+
+    </script>
+</body>
+</html>
