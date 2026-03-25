@@ -552,6 +552,10 @@
         </div>
     </div>
 
+    <!-- EmailJS -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script>emailjs.init('zCSYXZ18N0FJWuz1u');</script>
+
     <!-- Firebase SDKs -->
     <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
@@ -901,6 +905,16 @@
             });
 
             const room = ROOMS.find(r => r.id === activeRoomId);
+
+            emailjs.send('service_sv9t1ie', 'template_kskx6u6', {
+                room_name:  room.name,
+                room_type:  room.type,
+                guest_name: name,
+                guest_email: email,
+                guest_phone: phone || 'Not provided',
+                num_guests:  guests
+            }).catch(err => console.warn('EmailJS error:', err));
+
             const firstName = name.split(' ')[0];
 
             document.getElementById('modal-body').innerHTML = `
