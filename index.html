@@ -802,7 +802,7 @@
             beds: '1 King Suite + 1 King + 2 Queens',
             maxGuests: 8,
             pricePerNight: 1250,
-            description: 'Gorgeous views of the Battenkill River Valley. Four bedrooms all with en-suite bathrooms. Dual sitting rooms, chef's kitchen, pool room, large back deck, and fire pit. Connects to the River House Front.',
+            description: 'Gorgeous views of the Battenkill River Valley. Four bedrooms all with en-suite bathrooms. Dual sitting rooms, chef kitchen, pool room, large back deck, and fire pit. Connects to the River House Front.',
             image: './River_House__Back_.jpg',
             photosUrl: 'https://www.hillfarminn.com/river-house/#back',
             preReserved: true
@@ -1022,9 +1022,9 @@
     // ============================================================
     // START
     // ============================================================
-    initRooms().then(() => listenToRooms()).catch(console.error);
+    listenToRooms();
+    initRooms().catch(console.error);
 
     </script>
 </body>
 </html>
-
