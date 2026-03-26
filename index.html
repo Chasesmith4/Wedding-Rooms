@@ -515,7 +515,7 @@
         <div class="intro">
             <p class="intro-desc">We'd love to have our closest family and friends staying with us at Hill Farm Inn. All on-site guests enjoy a complimentary breakfast each morning and the full run of the property all weekend long.</p>
             <div class="payment-note">
-                No payment is required to hold your room. After you submit, we will share your information with Hill Farm Inn, who will reach out directly to confirm your booking and arrange payment.
+                <strong>Two-night stay required:</strong> All rooms are reserved for Friday, August 21st and Saturday, August 22nd. Price shown is per night.<br><br>No payment is required to hold your room. After you submit, we will share your information with Hill Farm Inn, who will reach out directly to confirm your booking and arrange payment.
             </div>
         </div>
 
@@ -537,6 +537,17 @@
         </div>
         <div class="room-track-wrap">
             <div class="room-track" id="house-track">
+                <div class="loading-msg">Loading rooms...</div>
+            </div>
+        </div>
+
+        <!-- Cottages Section -->
+        <div class="section-header">
+            <span class="eyebrow">Cottages</span>
+            <div class="section-divider"></div>
+        </div>
+        <div class="room-track-wrap">
+            <div class="room-track" id="cottage-track">
                 <div class="loading-msg">Loading rooms...</div>
             </div>
         </div>
@@ -644,7 +655,7 @@
             pricePerNight: 375,
             description: 'Deluxe queen located next to Saratoga with mountain views to the west.',
             image: './Emerald_Lake.jpg',
-            photosUrl: 'https://www.hillfarminn.com/inn-rooms/#emerald-lake',
+            photosUrl: 'https://www.hillfarminn.com/inn-rooms/#emerald',
             preReserved: true
         },
         {
@@ -658,7 +669,7 @@
             pricePerNight: 475,
             description: 'Deluxe king suite with an adjoining sitting room and a spacious bath with shower and tub. Ideal for families.',
             image: './Hill_Farm_Suite-5.jpg',
-            photosUrl: 'https://www.hillfarminn.com/inn-rooms/#hill-farm-suite'
+            photosUrl: 'https://www.hillfarminn.com/inn-rooms/#hill-farm'
         },
         {
             id: 'honeybee',
@@ -671,7 +682,7 @@
             pricePerNight: 475,
             description: 'Queen bedroom suite with mountain views, a comfortable sitting room, and a beautifully appointed marble bath.',
             image: './Honeybee.jpg',
-            photosUrl: 'https://www.hillfarminn.com/inn-rooms/#honeybee-suite'
+            photosUrl: 'https://www.hillfarminn.com/inn-rooms/#honey-bee'
         },
         // ── 1790 House ──
         {
@@ -724,7 +735,21 @@
             pricePerNight: 500,
             description: 'A cheerful, roomy suite with a queen master bedroom, Vermont Castings stove, and en-suite bath. Includes an adjoining room with twin day beds. First floor and ADA compliant.',
             image: './Dorset_Suite-4.jpg',
-            photosUrl: 'https://www.hillfarminn.com/inn-rooms/#dorset-suite'
+            photosUrl: 'https://www.hillfarminn.com/inn-rooms/#dorset'
+        },
+        // ── Cottages ──
+        {
+            id: 'townhouse',
+            name: 'Townhouse',
+            section: 'cottage',
+            location: 'River House Campus',
+            type: 'Cottage',
+            beds: '1 King + 2 Queens',
+            maxGuests: 6,
+            pricePerNight: 810,
+            description: 'A cheerfully renovated two-bedroom, two-bathroom cottage set on three levels. King bedroom and bathroom on the second floor, two queens and a bathroom on the third. Full contemporary kitchen, comfortable gathering space, and beautiful views of the Battenkill River Valley.',
+            image: './Townhouse-14.jpg',
+            photosUrl: 'https://www.hillfarminn.com/river-house/#townhouse'
         }
     ];
 
@@ -754,11 +779,13 @@
     // RENDER
     // ============================================================
     function renderTracks(firestoreData) {
-        const mainRooms  = ROOMS.filter(r => r.section === 'main');
-        const houseRooms = ROOMS.filter(r => r.section === 'house');
+        const mainRooms    = ROOMS.filter(r => r.section === 'main');
+        const houseRooms   = ROOMS.filter(r => r.section === 'house');
+        const cottageRooms = ROOMS.filter(r => r.section === 'cottage');
 
         document.getElementById('main-inn-track').innerHTML  = mainRooms.map(r => cardHTML(r, firestoreData)).join('');
         document.getElementById('house-track').innerHTML     = houseRooms.map(r => cardHTML(r, firestoreData)).join('');
+        document.getElementById('cottage-track').innerHTML   = cottageRooms.map(r => cardHTML(r, firestoreData)).join('');
     }
 
     function cardHTML(room, firestoreData) {
@@ -944,3 +971,4 @@
     </script>
 </body>
 </html>
+
